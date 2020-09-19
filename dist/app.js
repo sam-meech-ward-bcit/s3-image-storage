@@ -53,7 +53,9 @@ function _ref() {
       uploadsDir: _imageUploader.default.fullPostsDir,
       allPosts: _imageUploader.default.allPosts
     }));
-    app.use('/api/status', (0, _status.default)());
+    app.use('/api/status', (0, _status.default)({
+      s3
+    }));
     app.get('/api/appName', (req, res) => {
       res.send({
         name: process.env.APP_NAME || "You didn't setup APP_NAME"
@@ -75,26 +77,6 @@ function _ref() {
         });
       }
     });
-    app.get('/s3', /*#__PURE__*/function () {
-      var _ref2 = _asyncToGenerator(function* (req, res) {
-        try {
-          var buckets = yield s3.listBuckets();
-          var objects = yield s3.listObjects();
-          res.send({
-            buckets,
-            objects
-          });
-        } catch (error) {
-          res.status(500).send({
-            error
-          });
-        }
-      });
-
-      return function (_x2, _x3) {
-        return _ref2.apply(this, arguments);
-      };
-    }());
     app.get('*', (req, res) => {
       res.sendFile(_path.default.join(__dirname, '../build/index.html'));
     });

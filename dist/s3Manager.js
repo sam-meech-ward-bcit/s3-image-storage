@@ -33,6 +33,10 @@ function s3Manager(_ref) {
     return s3.listBuckets().promise();
   }
 
+  function listBuckets() {
+    return s3.getBucketAcl().promise();
+  }
+
   function listObjects() {
     return _listObjects.apply(this, arguments);
   }
