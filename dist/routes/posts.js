@@ -28,12 +28,22 @@ function _default(_ref) {
 
   router.get('/', /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator(function* (req, res, next) {
-      allPosts((err, files) => {
-        var posts = files.map(file => _path.default.join("/images/posts", file));
+      try {
+        var objects = yield s3.listObjects();
+        var posts = objects.Contents.map(object => _path.default.join("/images/posts", object.Key));
         res.send({
           posts
         });
-      });
+      } catch (error) {
+        console.log(error);
+        res.status(500).send({
+          error: error.message
+        });
+      } // allPosts((err, files) => {
+      //   const posts = files.map(file => path.join("/images/posts", file))
+      //   res.send({posts})
+      // })
+
     });
 
     return function (_x, _x2, _x3) {

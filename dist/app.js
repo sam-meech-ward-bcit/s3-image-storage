@@ -71,10 +71,14 @@ function _ref() {
     // })
 
 
-    app.get('/images/posts/:filename', (req, res, next) => {
-      var imagePath = _path.default.join(_imageUploader.default.fullPostsDir, req.params.filename);
-
-      handleFileRequest(imagePath, res);
+    app.get('/images/posts/:fileKey', (req, res, next) => {
+      var {
+        fileKey
+      } = req.params;
+      var stream = s3.getStream({
+        fileKey
+      });
+      res.sendFile(stream);
     });
     app.get('/s3', /*#__PURE__*/function () {
       var _ref2 = _asyncToGenerator(function* (req, res) {
