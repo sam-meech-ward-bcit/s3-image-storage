@@ -77,12 +77,18 @@ function _ref() {
     });
     app.get('/s3', /*#__PURE__*/function () {
       var _ref2 = _asyncToGenerator(function* (req, res) {
-        var buckets = yield s3.listBuckets();
-        var objects = yield s3.listObjects();
-        res.send({
-          buckets,
-          objects
-        });
+        try {
+          var buckets = yield s3.listBuckets();
+          var objects = yield s3.listObjects();
+          res.send({
+            buckets,
+            objects
+          });
+        } catch (error) {
+          res.send({
+            error
+          });
+        }
       });
 
       return function (_x2, _x3) {
