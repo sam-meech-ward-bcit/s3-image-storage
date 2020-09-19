@@ -93,8 +93,6 @@ function s3Manager(_ref) {
     });
   }
 
-  exports.upload = upload;
-
   function getStream(_ref3) {
     var {
       fileKey

@@ -49,6 +49,8 @@ function _ref() {
     }));
     app.use('/api/posts', (0, _posts.default)({
       upload: _imageUploader.default.uploadPosts,
+      s3,
+      uploadsDir: _imageUploader.default.fullPostsDir,
       allPosts: _imageUploader.default.allPosts
     }));
     app.use('/api/status', (0, _status.default)());
@@ -63,15 +65,14 @@ function _ref() {
 
         res.sendFile(filePath);
       });
-    }
+    } // app.get('/images/posts/:filename', (req, res, next) => {
+    //   const imagePath = path.join(imageUploader.fullPostsDir, req.params.filename)
+    //   handleFileRequest(imagePath, res)
+    // })
+
 
     app.get('/images/posts/:filename', (req, res, next) => {
       var imagePath = _path.default.join(_imageUploader.default.fullPostsDir, req.params.filename);
-
-      handleFileRequest(imagePath, res);
-    });
-    app.get('/images/avatars/:filename', (req, res, next) => {
-      var imagePath = _path.default.join(_imageUploader.default.fullAvatarsDir, req.params.filename);
 
       handleFileRequest(imagePath, res);
     });

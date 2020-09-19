@@ -18,6 +18,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 function _default(_ref) {
   var {
     upload,
+    s3,
+    uploadsDir,
     allPosts
   } = _ref;
 
@@ -45,9 +47,20 @@ function _default(_ref) {
         url: "/images/posts/".concat(file.filename),
         type: 'image'
       }));
-      res.send({
-        media
-      });
+
+      try {
+        var result = yield s3.upload({
+          file: _path.default.join(uploadsDir, file.filename)
+        });
+        res.send({
+          media,
+          result
+        });
+      } catch (error) {
+        res.send({
+          error
+        });
+      }
     });
 
     return function (_x4, _x5, _x6) {
