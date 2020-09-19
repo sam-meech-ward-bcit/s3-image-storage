@@ -7,7 +7,7 @@ exports.default = _default;
 
 var _express = _interopRequireDefault(require("express"));
 
-var _fs = require("fs");
+var _fs = _interopRequireDefault(require("fs"));
 
 var _path = _interopRequireDefault(require("path"));
 
@@ -79,7 +79,7 @@ function _default(_ref) {
       } // Delete the temporary files
 
 
-      media.forEach(file => fs.unlinkSync(file.path));
+      media.forEach(file => _fs.default.unlinkSync(file.path));
     });
 
     return function (_x4, _x5, _x6) {

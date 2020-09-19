@@ -30,17 +30,22 @@ function _default(_ref) {
     var _ref2 = _asyncToGenerator(function* (req, res) {
       try {
         var buckets = yield s3.listBuckets();
-        var objects = yield s3.listObjects();
-        var acl = yield s3.getBucketAcl();
-        res.send({
-          buckets,
-          objects,
-          acl
-        });
-      } catch (error) {
         res.status(500).send({
-          error
-        });
+          error: "Your IAM role can do too much"
+        }); // const acl = await s3.getBucketAcl()
+        // res.send({buckets, objects, acl})
+      } catch (error) {
+        // res.status(500).send({error})
+        try {
+          var objects = yield s3.listObjects();
+          res.send({
+            objects
+          });
+        } catch (error) {
+          res.status(500).send({
+            error
+          });
+        }
       }
     });
 
