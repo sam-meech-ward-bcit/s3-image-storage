@@ -72,13 +72,20 @@ function _ref() {
 
 
     app.get('/images/posts/:fileKey', (req, res, next) => {
-      var {
-        fileKey
-      } = req.params;
-      var stream = s3.getStream({
-        fileKey
-      });
-      stream.pipe(res);
+      try {
+        var {
+          fileKey
+        } = req.params;
+        var stream = s3.getStream({
+          fileKey
+        });
+        stream.pipe(res);
+      } catch (error) {
+        console.log(error);
+        res.status(500).send({
+          error: error.message
+        });
+      }
     });
     app.get('/s3', /*#__PURE__*/function () {
       var _ref2 = _asyncToGenerator(function* (req, res) {

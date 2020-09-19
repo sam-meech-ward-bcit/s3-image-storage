@@ -99,7 +99,7 @@ function s3Manager(_ref) {
     } = _ref3;
     console.log('Trying to download file', fileKey);
     var options = {
-      Bucket: 'itl-images',
+      Bucket: bucketName,
       Key: fileKey
     };
     var fileStream = s3.getObject(options).createReadStream();
