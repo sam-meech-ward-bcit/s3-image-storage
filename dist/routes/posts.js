@@ -45,16 +45,23 @@ function _default(_ref) {
     var _ref3 = _asyncToGenerator(function* (req, res, next) {
       var media = req.files.map(file => ({
         url: "/images/posts/".concat(file.filename),
-        type: 'image'
+        type: 'image',
+        path: _path.default.join(uploadsDir, file.filename)
       }));
 
       try {
-        var result = yield s3.upload({
-          file: _path.default.join(uploadsDir, file.filename)
-        });
+        var results = [];
+
+        for (var image of media) {
+          var result = yield s3.upload({
+            file: image.path
+          });
+          results.push(result);
+        }
+
         res.send({
           media,
-          result
+          results
         });
       } catch (error) {
         console.log(error);
