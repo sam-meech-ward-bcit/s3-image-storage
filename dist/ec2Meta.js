@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.ec2Meta = ec2Meta;
 exports.ipv4 = ipv4;
 exports.instanceId = instanceId;
+exports.iam = iam;
 exports.hostname = hostname;
 
 var _axios = _interopRequireDefault(require("axios"));
@@ -59,6 +60,18 @@ function _instanceId() {
     return result.data;
   });
   return _instanceId.apply(this, arguments);
+}
+
+function iam() {
+  return _iam.apply(this, arguments);
+}
+
+function _iam() {
+  _iam = _asyncToGenerator(function* () {
+    var result = yield instance.get('/iam/info');
+    return result.data;
+  });
+  return _iam.apply(this, arguments);
 }
 
 function hostname() {

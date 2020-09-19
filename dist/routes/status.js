@@ -56,6 +56,7 @@ function _default(_ref) {
         ec2.ipv4 = yield ec2Meta.ipv4();
         ec2.hostname = yield ec2Meta.hostname();
         ec2.instanceId = yield ec2Meta.instanceId();
+        ec2.iam = yield ec2Meta.iam();
       } catch (err) {
         console.log(err);
         ec2 = "error";
