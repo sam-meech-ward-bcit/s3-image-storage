@@ -25,7 +25,7 @@ function s3Manager(_ref) {
   }); // Create S3 service object
 
 
-  s3 = new _awsSdk.default.S3({
+  var s3 = new _awsSdk.default.S3({
     apiVersion: '2006-03-01'
   });
 
