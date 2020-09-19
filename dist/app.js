@@ -78,7 +78,7 @@ function _ref() {
       var stream = s3.getStream({
         fileKey
       });
-      res.sendFile(stream);
+      stream.pipe(res);
     });
     app.get('/s3', /*#__PURE__*/function () {
       var _ref2 = _asyncToGenerator(function* (req, res) {
