@@ -86,7 +86,7 @@ function _ref() {
             objects
           });
         } catch (error) {
-          res.send({
+          res.status(500).send({
             error
           });
         }
