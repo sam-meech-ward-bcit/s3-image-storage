@@ -30,16 +30,7 @@ function s3Manager(_ref) {
   });
 
   function listBuckets() {
-    return new Promise((resolve, reject) => {
-      // Call S3 to list the buckets
-      s3.listBuckets(function (err, data) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(data.Buckets);
-        }
-      });
-    });
+    return s3.listBuckets.promise();
   }
 
   function listObjects() {
@@ -103,7 +94,7 @@ function s3Manager(_ref) {
       Key: fileKey
     };
     var fileStream = s3.getObject(options).createReadStream();
-    return fileStream; // fileStream.pipe(res)
+    return fileStream;
   }
 
   return {
