@@ -65,6 +65,11 @@ function _default(_ref) {
       var other = {};
       var data = {
         ec2,
+        env: {
+          bucket_region: process.env.BUCKET_REGION,
+          bucket_name: process.env.BUCKET_NAME,
+          app_name: process.env.APP_NAME
+        },
         other
       };
       console.log(data);
