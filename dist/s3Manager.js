@@ -33,8 +33,18 @@ function s3Manager(_ref) {
     return s3.listBuckets().promise();
   }
 
-  function listBuckets() {
-    return s3.getBucketAcl().promise();
+  function getBucketAcl() {
+    return _getBucketAcl.apply(this, arguments);
+  }
+
+  function _getBucketAcl() {
+    _getBucketAcl = _asyncToGenerator(function* () {
+      var params = {
+        Bucket: bucketName
+      };
+      return s3.getBucketAcl(params).promise();
+    });
+    return _getBucketAcl.apply(this, arguments);
   }
 
   function listObjects() {
@@ -46,8 +56,7 @@ function s3Manager(_ref) {
       var params = {
         Bucket: bucketName
       };
-      var results = yield s3.listObjectsV2(params).promise();
-      return results;
+      return s3.listObjectsV2(params).promise();
     });
     return _listObjects.apply(this, arguments);
   }
@@ -105,6 +114,7 @@ function s3Manager(_ref) {
     getStream,
     upload,
     listBuckets,
-    listObjects
+    listObjects,
+    getBucketAcl
   };
 }
