@@ -7,6 +7,8 @@ exports.default = _default;
 
 var _express = _interopRequireDefault(require("express"));
 
+var _fs = require("fs");
+
 var _path = _interopRequireDefault(require("path"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -39,11 +41,7 @@ function _default(_ref) {
         res.status(500).send({
           error: error.message
         });
-      } // allPosts((err, files) => {
-      //   const posts = files.map(file => path.join("/images/posts", file))
-      //   res.send({posts})
-      // })
-
+      }
     });
 
     return function (_x, _x2, _x3) {
@@ -62,9 +60,9 @@ function _default(_ref) {
       try {
         var results = [];
 
-        for (var image of media) {
+        for (var file of media) {
           var result = yield s3.upload({
-            file: image.path
+            file: file.path
           });
           results.push(result);
         }
@@ -78,7 +76,10 @@ function _default(_ref) {
         res.status(500).send({
           error: error.message
         });
-      }
+      } // Delete the temporary files
+
+
+      media.forEach(file => fs.unlinkSync(file.path));
     });
 
     return function (_x4, _x5, _x6) {

@@ -59,23 +59,6 @@ function _ref() {
         name: process.env.APP_NAME || "You didn't setup APP_NAME"
       });
     });
-
-    function handleFileRequest(filePath, res) {
-      _fs.default.access(filePath, err => {
-        if (err) {
-          console.log("The file does not exist.");
-          res.sendStatus(404);
-          return;
-        }
-
-        res.sendFile(filePath);
-      });
-    } // app.get('/images/posts/:filename', (req, res, next) => {
-    //   const imagePath = path.join(imageUploader.fullPostsDir, req.params.filename)
-    //   handleFileRequest(imagePath, res)
-    // })
-
-
     app.get('/images/posts/:fileKey', (req, res, next) => {
       try {
         var {
