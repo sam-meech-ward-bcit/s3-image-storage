@@ -57,8 +57,9 @@ function _default(_ref) {
           result
         });
       } catch (error) {
+        console.log(error);
         res.send({
-          error
+          error: error.message
         });
       }
     });
