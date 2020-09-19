@@ -65,7 +65,7 @@ function _default(_ref) {
         });
       } catch (error) {
         console.log(error);
-        res.send({
+        res.error({
           error: error.message
         });
       }
