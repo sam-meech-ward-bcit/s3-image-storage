@@ -30,7 +30,7 @@ function s3Manager(_ref) {
   });
 
   function listBuckets() {
-    return s3.listBuckets.promise();
+    return s3.listBuckets().promise();
   }
 
   function listObjects() {
