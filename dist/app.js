@@ -54,6 +54,11 @@ function _ref() {
       allPosts: _imageUploader.default.allPosts
     }));
     app.use('/api/status', (0, _status.default)());
+    app.get('/api/appName', (req, res) => {
+      res.send({
+        name: process.env.APP_NAME || "You didn't setup APP_NAME"
+      });
+    });
 
     function handleFileRequest(filePath, res) {
       _fs.default.access(filePath, err => {
