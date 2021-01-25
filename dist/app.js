@@ -41,12 +41,29 @@ function _default(_x) {
 function _ref() {
   _ref = _asyncToGenerator(function* (params) {
     var app = (0, _express.default)();
-    app.use(_express.default.static(_path.default.join(__dirname, '../build')));
+    app.use((req, res, next) => {
+      console.log(req.originalUrl);
+
+      if ((req.headers.referer || "").includes("/test") || req.originalUrl.includes("/test")) {
+        console.log("test static");
+
+        _express.default.static(_path.default.join(__dirname, '../testerBuild'))(req, res, next);
+
+        return;
+      }
+
+      console.log("normal static");
+
+      _express.default.static(_path.default.join(__dirname, '../build'))(req, res, next);
+    });
     app.use((0, _morgan.default)(':method :url :status :res[content-length] - :response-time ms'));
     app.use(_express.default.json());
     app.use(_express.default.urlencoded({
       extended: false
     }));
+
+    var fileDir = _path.default.join(__dirname, '../public/files');
+
     app.use('/api/posts', (0, _posts.default)({
       upload: _imageUploader.default.uploadPosts,
       s3,
@@ -54,7 +71,8 @@ function _ref() {
       allPosts: _imageUploader.default.allPosts
     }));
     app.use('/api/status', (0, _status.default)({
-      s3
+      s3,
+      fileDir
     }));
     app.get('/api/appName', (req, res) => {
       res.send({
@@ -76,6 +94,9 @@ function _ref() {
           error: JSON.stringify(error)
         });
       }
+    });
+    app.get('/test', (req, res) => {
+      res.sendFile(_path.default.join(__dirname, '../testerBuild/index.html'));
     });
     app.get('*', (req, res) => {
       res.sendFile(_path.default.join(__dirname, '../build/index.html'));

@@ -8,6 +8,10 @@ exports.ipv4 = ipv4;
 exports.instanceId = instanceId;
 exports.iam = iam;
 exports.hostname = hostname;
+exports.mac = mac;
+exports.securityGroupId = securityGroupId;
+exports.availabilityZone = availabilityZone;
+exports.region = region;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -76,7 +80,10 @@ function _iam() {
 
 function hostname() {
   return _hostname.apply(this, arguments);
-} // ipv4().then(console.log)
+} // export async function iam() {
+//   const result = await instance.get('/iam/info')
+//   return result.data
+// }
 
 
 function _hostname() {
@@ -85,4 +92,55 @@ function _hostname() {
     return result.data;
   });
   return _hostname.apply(this, arguments);
+}
+
+function mac() {
+  return _mac.apply(this, arguments);
+}
+
+function _mac() {
+  _mac = _asyncToGenerator(function* () {
+    var result = yield instance.get('/network/interfaces/macs');
+    return result.data.replace("/", "");
+  });
+  return _mac.apply(this, arguments);
+}
+
+function securityGroupId() {
+  return _securityGroupId.apply(this, arguments);
+}
+
+function _securityGroupId() {
+  _securityGroupId = _asyncToGenerator(function* () {
+    var m = yield mac();
+    var result = yield instance.get("/network/interfaces/macs/".concat(m, "/security-group-ids"));
+    return result.data;
+  });
+  return _securityGroupId.apply(this, arguments);
+}
+
+function availabilityZone() {
+  return _availabilityZone.apply(this, arguments);
+}
+
+function _availabilityZone() {
+  _availabilityZone = _asyncToGenerator(function* () {
+    var result = yield instance.get('/placement/availability-zone');
+    return result.data;
+  });
+  return _availabilityZone.apply(this, arguments);
+}
+
+function region() {
+  return _region.apply(this, arguments);
+} // ipv4().then(console.log)
+
+
+function _region() {
+  _region = _asyncToGenerator(function* () {
+    var az = yield availabilityZone();
+    var comps = az.split("-");
+    return "".concat(comps[0], "-").concat(comps[1], "-").concat(comps[2][0]);
+  });
+  return _region.apply(this, arguments);
 }

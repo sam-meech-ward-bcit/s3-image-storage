@@ -32,7 +32,7 @@ function _default(_ref) {
     var _ref2 = _asyncToGenerator(function* (req, res, next) {
       try {
         var objects = yield s3.listObjects();
-        var posts = objects.Contents.map(object => _path.default.join("/images/posts", object.Key));
+        var posts = objects.Contents.filter(object => !object.Key.endsWith(".txt")).map(object => _path.default.join("/images/posts", object.Key));
         res.send({
           posts
         });
