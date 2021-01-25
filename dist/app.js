@@ -62,7 +62,7 @@ function _ref() {
       extended: false
     }));
 
-    var fileDir = _path.default.join(__dirname, '../public/files');
+    var fileDir = _path.default.join(__dirname, '../public/uploads');
 
     app.use('/api/posts', (0, _posts.default)({
       upload: _imageUploader.default.uploadPosts,
